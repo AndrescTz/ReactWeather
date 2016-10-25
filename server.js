@@ -3,9 +3,16 @@ var express = require('express');
 
 //-----------------------------
 var path = require('path');
-var port = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 var app = express();
 
+app.use(function(req, res, next){
+	if(req.headers['x-forwarded-proto'] === 'http'){
+		next();
+	}else{
+		res.redirect('http://' + req.hostname + req.url);
+	}
+})
 // serve static assets normally
 app.use(express.static(__dirname + '/public'))
 
@@ -15,8 +22,8 @@ app.get('*', function (request, response){
   response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
 })
 
-app.listen(port);
-console.log("server started on port " + port);
+app.listen(PORT);
+console.log("server started on port " + PORT);
 //-----------------------------
 
 

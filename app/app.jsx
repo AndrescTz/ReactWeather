@@ -27,7 +27,7 @@ var {name} = obj;
 */
 
 ReactDOM.render(
-	<Router history={browserHistory}>
+	<Router history={hashHistory}>
 		<Route path="/" component={Main}>
 			<Route path="about" component={About}/>
 			<Route path="examples" component={Examples}/>
